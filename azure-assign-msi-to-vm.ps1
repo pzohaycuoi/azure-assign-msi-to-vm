@@ -1,8 +1,6 @@
 param (
-
   [Parameter(Mandatory)]
   [string]$FilePath
-  
 )
 
 # Current path where the script run

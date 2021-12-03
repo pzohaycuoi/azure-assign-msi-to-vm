@@ -19,7 +19,6 @@ function Check-FileExist {
       try {
 
         $importCsv = Import-Csv -path $FilePath -ErrorAction Stop
-
         New-Log -Level "INFO" -Message "Import Input Csv file success"
 
       }
