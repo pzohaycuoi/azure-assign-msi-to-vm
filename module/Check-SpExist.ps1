@@ -1,6 +1,3 @@
-$scriptDir = $PSScriptRoot
-. "$($scriptDir)\..\common\New-Log.ps1"
-
 function Check-SpExist {
 
   param (
@@ -17,14 +14,14 @@ function Check-SpExist {
 
   if ($checkIfSpExist -eq $false) {
   
-    New-Log -Level "INFO" -Message "$($SpCheck) is exist"
+    New-Log -Level "WARN" -Message "$($SpCheck) is not exist"
 
     return $false
 
   }
   else {
 
-    New-Log -Level "WARN" -Message "$($SpCheck) is not exist"
+    New-Log -Level "INFO" -Message "$($SpCheck) is exist"
       
     return $true
 

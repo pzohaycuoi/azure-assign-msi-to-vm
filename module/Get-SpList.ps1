@@ -1,6 +1,3 @@
-$scriptDir = $PSScriptRoot
-. "$($scriptDir)\..\common\New-Log.ps1"
-
 function Get-SpList {
 
   try {
