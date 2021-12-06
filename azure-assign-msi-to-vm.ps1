@@ -23,4 +23,15 @@ foreach ($module in $commonModuleList) {
 } # end foreach ($module in $moduleList)
 
 # Get all managed identities/service principals
-$servicePrincipalList = Get-AzADServicePrincipal
+$getSpList = Get-SpList
+
+if ($getSpList -eq $false) {
+  
+  break
+
+}
+else {
+  
+
+
+}
