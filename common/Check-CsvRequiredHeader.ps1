@@ -1,5 +1,9 @@
 $scriptDir = $PSScriptRoot
 . "$($scriptDir)\New-Log.ps1"
+. "$($scriptDir)\Check-PathIsLinuxOrWin.ps1"
+
+$CheckPathIsLinuxOrWin = Check-PathIsLinuxOrWin
+
 
 function Check-CsvRequiredHeader {
   
@@ -7,14 +11,15 @@ function Check-CsvRequiredHeader {
     [Parameter(Mandatory)]
     [string]$FilePath,
 
-    [Parameter(Mandatory)]
-    [string]$RequiredHeaderFile
+    [Parameter()]
+    [string]$RequiredHeaderFile = $defaultReqCsvHeaderFilePath
   )
 
   $getRequiredHeader = Get-Content -Path $RequiredHeaderFile
   $importCsv = Import-Csv -Path $FilePath
   $CsvHeader = $ImportCsv[0].PsObject.Properties.Name
 
+  # check if csv's header contains all the required headers
   foreach ($header in $getRequiredHeader) {
 
     if (-not($CsvHeader -contains $header)) {
