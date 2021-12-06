@@ -4,25 +4,24 @@ $scriptDir = $PSScriptRoot
 function Check-SpExist {
 
   param (
-      [Parameter(Mandatory)]
-      [psobject]$SpList
+    [Parameter(Mandatory)]
+    [psobject]$SpList,
+
+    [Parameter(Mandatory)]
+    [string]$SpCheck
   )
   
-  # loop through object array and check if sp exist
-  foreach ($sp in $SpList) {
-    
-    $spDisplayName = $sp.DisplayName
-    $checkIfSpExist = $SpList | Where { $_.DisplayName -eq $spDisplayName }
+  $spListDisplayName = $SpList.DisplayName
+  $checkIfSpExist = $spListDisplayName -contains $SpCheck
 
-    if ($checkIfSpExist -eq $null) {
+  if ($checkIfSpExist -eq $false) {
       
-      return $false
+    return $false
 
-    } else {
+  }
+  else {
       
-      return $true
-
-    }
+    return $true
 
   }
 
