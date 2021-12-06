@@ -1,10 +1,3 @@
-$scriptDir = $PSScriptRoot
-. "$($scriptDir)\New-Log.ps1"
-. "$($scriptDir)\Check-PathIsLinuxOrWin.ps1"
-
-$CheckPathIsLinuxOrWin = Check-PathIsLinuxOrWin
-
-
 function Check-CsvRequiredHeader {
   
   param (

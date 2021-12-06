@@ -1,6 +1,3 @@
-$scriptDir = $PSScriptRoot
-. "$($scriptDir)\New-Log.ps1"
-
 function Check-FileExist {
  
   param (
