@@ -16,7 +16,8 @@ if ($getCurrentPath -clike "*\*") {
   $ChecKPathIsLinuxOrWinPath = "$($scriptDir)\common\Check-PathIsLinuxOrWin.ps1"
   . $ChecKPathIsLinuxOrWinPath
 
-} elseif ($getCurrentPath -clike "*/*") {
+}
+elseif ($getCurrentPath -clike "*/*") {
 
   $ChecKPathIsLinuxOrWinPath = "$($scriptDir)/common/Check-PathIsLinuxOrWin.ps1"
   . $CheckPathIsLinuxOrWinPath
@@ -43,18 +44,29 @@ foreach ($module in $commonModuleList) {
 
 } # end foreach ($module in $moduleList)
 
-# Get all managed identities/service principals
-$getSpList = Get-SpList
+# check if path of the FilePath is valid
+$checkFileExist = Check-FileExist -FilePath $FilePath
 
-if ($getSpList -eq $false) {
-  
+if ($checkFileExist -eq $false) {
+
   break
 
 }
 else {
-  
-  foreach ($item in $collection) {
-    
-  }
 
-}
+  # Get all managed identities/service principals
+  $getSpList = Get-SpList
+
+  if ($getSpList -eq $false) {
+
+    break
+
+  }
+  else {
+  
+    $importCsv = Import-Csv -Path $FilePath
+
+  } # end if ($getSpList -eq $false)
+
+} # end if ($checkFileExist -eq $false)
+

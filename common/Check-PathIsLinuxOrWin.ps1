@@ -15,11 +15,11 @@ function Check-PathIsLinuxOrWin {
     return $FilePath
 
   } elseif ($getCurrentPath -clike "*/*") {
-   
+
     $FilePath = $FilePath.Replace("\","/")
 
     return $FilePath
 
-  }
+  } # end if ($getCurrentPath -clike "*\*")
   
-}
+} # end function Check-PathIsLinuxOrWin

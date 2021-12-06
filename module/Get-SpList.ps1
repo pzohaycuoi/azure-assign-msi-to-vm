@@ -15,6 +15,6 @@ function Get-SpList {
     
     return $false
 
-  }
+  } # end try
   
-}
+} # end function Get-SpList

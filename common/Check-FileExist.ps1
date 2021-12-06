@@ -1,9 +1,8 @@
 function Check-FileExist {
- 
+
   param (
     [Parameter(Mandatory)]
-    [string]
-    $FilePath
+    [string]$FilePath
   )
 
   # check if the file exist and has the right extension
@@ -12,27 +11,16 @@ function Check-FileExist {
     # Check if file extension is .csv
     if ([IO.Path]::GetExtension($FilePath) -eq ".csv") {
 
-      # Import Csv file
-      try {
+      New-Log -Level "INFO" -Message "File type is csv"
 
-        $importCsv = Import-Csv -path $FilePath -ErrorAction Stop
-        New-Log -Level "INFO" -Message "Import Input Csv file success"
-
-      }
-      catch {
-
-        New-Log -Level "ERROR" -Message $_.Exception
-
-        Break
-
-      } # end try
+      return $true
 
     }
     else {
 
       New-Log -Level "ERROR" -Message "File type is not csv,"
 
-      Break
+      return $false
 
     } # end if ([IO.Path]::GetExtension($FilePath) -eq ".csv")
 
@@ -41,8 +29,8 @@ function Check-FileExist {
 
     New-Log -Level "ERROR" -Message "Path to file not exist, aborting"
 
-    Break
+    return $false
   
   }  # end if (Test-Path -Path $FilePath)z
 
-}
+} # end function Check-FileExist

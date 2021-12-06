@@ -22,9 +22,9 @@ function Check-SpExist {
   else {
 
     New-Log -Level "INFO" -Message "$($SpCheck) is exist"
-      
+
     return $true
 
-  }
+  } # end if ($checkIfSpExist -eq $false)
 
-}
+} # end function Check-SpExist

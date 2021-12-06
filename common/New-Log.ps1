@@ -17,4 +17,4 @@ function New-Log {
 
   return $messageLog
   
-}
+} # end function New-Log

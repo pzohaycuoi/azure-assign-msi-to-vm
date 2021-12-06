@@ -28,8 +28,8 @@ function Check-CsvRequiredHeader {
 
       return $true
 
-    }
+    } # end if (-not($CsvHeader -contains $header))
 
-  }
+  } # end foreach ($header in $getRequiredHeader)
 
-}
+} # end function Check-CsvRequiredHeader
