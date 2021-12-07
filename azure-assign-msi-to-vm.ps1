@@ -63,8 +63,19 @@ else {
 
   }
   else {
-  
-    $importCsv = Import-Csv -Path $FilePath
+
+    $reqCsvHeaderDataPath = "$($scriptDir)\Data\required-csv-header.txt"
+    $checkCsvReqHeader = Check-CsvRequiredHeader -FilePath $FilePath -RequiredHeaderFile $reqCsvHeaderDataPath
+
+    if ($checkCsvReqHeader -eq $false) {
+      
+      break
+
+    } else {
+      
+
+
+    } # end if ($checkCsvReqHeader -eq $false)
 
   } # end if ($getSpList -eq $false)
 

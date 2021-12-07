@@ -4,8 +4,8 @@ function Check-CsvRequiredHeader {
     [Parameter(Mandatory)]
     [string]$FilePath,
 
-    [Parameter()]
-    [string]$RequiredHeaderFile = $defaultReqCsvHeaderFilePath
+    [Parameter(Mandatory)]
+    [string]$RequiredHeaderFile
   )
 
   $getRequiredHeader = Get-Content -Path $RequiredHeaderFile
