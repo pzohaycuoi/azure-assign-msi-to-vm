@@ -24,11 +24,11 @@ function Receive-InputData {
   # Put input data into an object, passing this into other module
   $inputData = [PsCustomObject]@{  
 
-    Subscription = $Subscription
+    Subscription  = $Subscription
     ResourceGroup = $ResourceGroup
-    Region = $Region
-    MsiName = $MsiName
-    VmName = $VmName
+    Region        = $Region
+    MsiName       = $MsiName
+    VmName        = $VmName
 
   }
 

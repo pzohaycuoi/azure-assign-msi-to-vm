@@ -20,7 +20,8 @@ function Check-MsiExist {
 
       return $false
 
-    } else {
+    }
+    else {
       
       New-Log -Level "INFO" -Message "Check if $($MsiName) is exist"
 

@@ -54,63 +54,64 @@ if ($checkFileExist -eq $false) {
 }
 else {
 
-  # Get all managed identities/service principals
-  $getSpList = Get-SpList
+  $reqCsvHeaderDataPath = "$($scriptDir)\Data\required-csv-header.txt"
+  $checkCsvReqHeader = Check-CsvRequiredHeader -FilePath $FilePath -RequiredHeaderFile $reqCsvHeaderDataPath
 
-  if ($getSpList -eq $false) {
-
+  if ($checkCsvReqHeader -eq $false) {
+      
     break
 
   }
   else {
-
-    $reqCsvHeaderDataPath = "$($scriptDir)\Data\required-csv-header.txt"
-    $checkCsvReqHeader = Check-CsvRequiredHeader -FilePath $FilePath -RequiredHeaderFile $reqCsvHeaderDataPath
-
-    if ($checkCsvReqHeader -eq $false) {
       
-      break
+    $CsvData = Import-Csv -Path $FilePath
+    $allSub = Get-AllAzSub
 
-    }
-    else {
-      
-      $CsvData = Import-Csv -Path $FilePath
-      $allSub = Get-AllAzSub
-
-      foreach ($row in $CsvData) {
+    foreach ($row in $CsvData) {
         
-        $subscription = $row.subsciprtion
-        $msiResourceGroup = $row.msiresourcegroup
-        $region = $row.region
-        $msiname = $row.msiname
-        $vmResourceGroup = $row.vmResourceGroup
-        $vmname = $row.vmname
+      $subscription = $row.subsciprtion
+      $msiResourceGroup = $row.msiresourcegroup
+      $region = $row.region
+      $msiname = $row.msiname
+      $vmResourceGroup = $row.vmResourceGroup
+      $vmname = $row.vmname
 
-        if (-not ($allSub -contains $subscription)) {
+      if (-not ($allSub -contains $subscription)) {
           
+        break
+
+      }
+      else {
+
+        $getCurSub = Get-CurrentSub
+        if ($getCurSub -eq $false) {
+            
           break
 
         }
         else {
-
-          $getCurSub = Get-CurrentSub
-          if ($getCurSub -eq $false) {
             
-            break
+          if (-not ($getCurSub -eq $subscription)) {
+              
+            $setAzSub = Set-AzSub -SubscriptionName $subscription
 
-          } else {
-            
+            if ($setAzSub -eq $false) {
+                
+              break
+
+            } # end if ($setAzSub -eq $false)
+
+          } # end if (-not ($getCurSub -eq $subscription))
 
 
-          } # end if ($getCurSub -eq $false)
+
+        } # end if ($getCurSub -eq $false)
           
-        } # end if (-not ($allSub -contains $subscription))
+      } # end if (-not ($allSub -contains $subscription))
 
-      } # end foreach ($row in $CsvData)
+    } # end foreach ($row in $CsvData)
 
-    } # end if ($checkCsvReqHeader -eq $false)
-
-  } # end if ($getSpList -eq $false)
+  } # end if ($checkCsvReqHeader -eq $false)
 
 } # end if ($checkFileExist -eq $false)
 

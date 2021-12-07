@@ -1,8 +1,8 @@
 function Set-AzSub {
   
   param (
-      [Parameter(Mandatory)]
-      [string]$SubscriptionName
+    [Parameter(Mandatory)]
+    [string]$SubscriptionName
   )
 
   try {
