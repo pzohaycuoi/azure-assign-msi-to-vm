@@ -8,12 +8,12 @@ function Check-CsvRequiredHeader {
     [string]$RequiredHeaderFile
   )
 
-  $getRequiredHeader = Get-Content -Path $RequiredHeaderFile
+  $requiredHeaders = Get-Content -Path $RequiredHeaderFile
   $importCsv = Import-Csv -Path $FilePath
   $CsvHeader = $ImportCsv[0].PsObject.Properties.Name
 
   # check if csv's header contains all the required headers
-  foreach ($header in $getRequiredHeader) {
+  foreach ($header in $requiredHeaders) {
 
     if (-not($CsvHeader -contains $header)) {
 
@@ -30,6 +30,6 @@ function Check-CsvRequiredHeader {
 
     } # end if (-not($CsvHeader -contains $header))
 
-  } # end foreach ($header in $getRequiredHeader)
+  } # end foreach ($header in $requiredHeaders)
 
 } # end function Check-CsvRequiredHeader
