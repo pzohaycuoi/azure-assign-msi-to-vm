@@ -71,9 +71,42 @@ else {
       
       break
 
-    } else {
+    }
+    else {
       
-      
+      $CsvData = Import-Csv -Path $FilePath
+      $allSub = Get-AllAzSub
+
+      foreach ($row in $CsvData) {
+        
+        $subscription = $row.subsciprtion
+        $msiResourceGroup = $row.msiresourcegroup
+        $region = $row.region
+        $msiname = $row.msiname
+        $vmResourceGroup = $row.vmResourceGroup
+        $vmname = $row.vmname
+
+        if (-not ($allSub -contains $subscription)) {
+          
+          break
+
+        }
+        else {
+
+          $getCurSub = Get-CurrentSub
+          if ($getCurSub -eq $false) {
+            
+            break
+
+          } else {
+            
+
+
+          } # end if ($getCurSub -eq $false)
+          
+        } # end if (-not ($allSub -contains $subscription))
+
+      } # end foreach ($row in $CsvData)
 
     } # end if ($checkCsvReqHeader -eq $false)
 

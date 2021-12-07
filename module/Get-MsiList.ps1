@@ -1,12 +1,12 @@
-function Get-SpList {
+function Get-MsiList {
 
   try {
     
     New-Log -Level "INFO" -Message "Getting SP list"
-    $spList = Get-AzADServicePrincipal -ErrorAction Stop
+    $msiList = Get-AzUserAssignedIdentity -ErrorAction Stop
     New-Log -Level "INFO" -Message "Get SP list success"
 
-    return $spList
+    return $msiList
 
   }
   catch {
