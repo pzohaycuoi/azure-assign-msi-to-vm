@@ -15,18 +15,16 @@ function Check-CsvRequiredHeader {
   # check if csv's header contains all the required headers
   foreach ($header in $requiredHeaders) {
 
-    if (-not($CsvHeader -contains $header)) {
+    if ($CsvHeader -contains $header) {
 
-      New-Log -Level "ERROR" -Message "CSV's header doesn't contain required header"
-
-      return $false
+      New-Log -Level "INFO" -Message "CSV's header contains all required headers"
+      return $true
 
     }
     else { 
       
-      New-Log -Level "INFO" -Message "CSV's header contains all required header"
-
-      return $true
+      New-Log -Level "ERROR" -Message "Failed: CSV's header doesn't contain required headers"
+      return $false
 
     } # end if (-not($CsvHeader -contains $header))
 
