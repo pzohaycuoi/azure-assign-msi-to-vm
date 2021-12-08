@@ -11,7 +11,7 @@ function Check-SubExist {
   # check if the subscription name exist in the list
   if ($SubscriptionList -contains $SubscriptionName) {
     
-    New-Log -Level "INFO" -Message "$($SubscriptionName) exist"
+    New-Log -Level "INFO" -Message "subscription $($SubscriptionName) exist"
     return $true
 
   } else {
@@ -20,6 +20,5 @@ function Check-SubExist {
     return $false
 
   } # end if ($SubscriptionList -contains $SubscriptionName)
-
 
 } # end function Check-SubExist

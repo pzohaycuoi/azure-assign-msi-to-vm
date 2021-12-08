@@ -92,7 +92,7 @@ if ($checkFileExist -eq $true) {
         if ($getCurSub -eq $true) {
              
           # set the current cli sub to the target subscription
-          if (-not ($getCurSub -eq $subscription)) {
+          if ($getCurSub -eq $subscription) {
                
             $setAzSub = Set-AzSub -SubscriptionName $subscription
  

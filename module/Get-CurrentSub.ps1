@@ -6,7 +6,7 @@ function Get-CurrentSub {
     
     New-Log -Level "INFO" -Message "Get current subscription name"
     $subName = (Get-AzContext -ErrorAction Stop).Subscription.Name
-    New-Log -Level "INFO" -Message "Current subscription name is $($subName)"
+    New-Log -Level "INFO" -Message "Current subscription is: $($subName)"
     return $subName
 
   }
