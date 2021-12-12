@@ -1,24 +1,21 @@
 function Check-SubExist {
-
   param (
-      [Parameter(Mandatory)]
-      [string]$SubscriptionName,
+    [Parameter(Mandatory)]
+    [string]$SubscriptionName,
 
-      [Parameter(Mandatory)]
-      [psobject]$SubscriptionList
+    [Parameter(Mandatory)]
+    [psobject]$SubscriptionList
   )
   
   # check if the subscription name exist in the list
+  $result = [PSCustomObject]@{}
+  $result | Add-Member -NotePropertyName "SubscriptionName" -NotePropertyValue $SubscriptionName
   if ($SubscriptionList -contains $SubscriptionName) {
-    
-    New-Log -Level "INFO" -Message "subscription $($SubscriptionName) exist"
-    return $true
-
-  } else {
-    
-    New-Log -Level "ERROR" -Message  "Failed: $($SubscriptionName) is not exist"
-    return $false
-
-  } # end if ($SubscriptionList -contains $SubscriptionName)
-
-} # end function Check-SubExist
+    $result | Add-Member -NotePropertyName "Result" -NotePropertyValue $true
+    return $result
+  }
+  else {
+    $result | Add-Member -NotePropertyName "Result" -NotePropertyValue $false
+    return $result
+  }
+}
