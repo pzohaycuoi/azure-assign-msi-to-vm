@@ -29,7 +29,7 @@ $logPath = "$($scriptDir)\log\"
 $resultPath = "$($scriptDir)\result\"
 $logPath = Check-PathIsLinuxOrWin -FilePath $logPath
 $resultPath = Check-PathIsLinuxOrWin -FilePath $resultPath
-$logFile = New-Item -Path $logPath -Name "log-$(get-date -Format ddMMyyyy-hhmmss).txt" -Force
+$logFile = New-Item -Path $logPath -Name "log-$(get-date -Format ddMMyyyy-hhmmss).log" -Force
 $resultFile = New-Item -Path $resultPath -Name "result-$(get-date -Format ddMMyyyy-hhmmss).csv" -Force
 
 Start-Transcript -Path $logFile.FullName

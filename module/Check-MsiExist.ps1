@@ -13,13 +13,8 @@ function Check-MsiExist {
     $result | Add-Member -NotePropertyName "MsiName" -NotePropertyValue $msiName
     $getMsi = Get-AzUserAssignedIdentity -ResourceGroupName $ResourceGroup -Name $MsiName -ErrorAction Stop
   
-    if ($getMsi.Name -contains $MsiName) {      
+    if ($getMsi.Name -eq $MsiName) {      
       $result | Add-Member -NotePropertyName "Result" -NotePropertyValue $true
-      return $result
-    }
-    else {    
-      $result | Add-Member -NotePropertyName "Log" -NotePropertyValue "Failed: Msi $($msiName) not exist"
-      $result | Add-Member -NotePropertyName "Result" -NotePropertyValue $false
       return $result
     }
   }
