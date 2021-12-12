@@ -24,7 +24,7 @@ function Check-MsiExist {
     }
   }
   catch {    
-    $result | Add-Member -NotePropertyName "Log" -NotePropertyValue $_
+    $result | Add-Member -NotePropertyName "Log" -NotePropertyValue "Failed: $($_)"
     $result | Add-Member -NotePropertyName "Result" -NotePropertyValue $false
     return $result
   }
