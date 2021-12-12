@@ -10,11 +10,10 @@ function Check-MsiExist {
   # check if the provided MSI exist in the resource group
   try {
     $result = [PSCustomObject]@{}
-    $msiInResourceGroup = Get-AzUserAssignedIdentity -ResourceGroupName $ResourceGroup -ErrorAction Stop
-    $msiNameInRg = $msiInResourceGroup.name
+    $getMsi = Get-AzUserAssignedIdentity -ResourceGroupName $ResourceGroup -Name $MsiName -ErrorAction Stop
     $result | Add-Member -NotePropertyName "MsiName" -NotePropertyValue $msiNameInRg
   
-    if ($msiNameInRg -contains $MsiName) {      
+    if ($getMsi.Name -contains $MsiName) {      
       $result | Add-Member -NotePropertyName "Result" -NotePropertyValue $true
       return $result
     }
