@@ -11,14 +11,15 @@ function Check-MsiExist {
   try {
     $result = [PSCustomObject]@{}
     $msiInResourceGroup = Get-AzUserAssignedIdentity -ResourceGroupName $ResourceGroup -ErrorAction Stop
-    $result | Add-Member -NotePropertyName "MsiName" -NotePropertyValue $MsiName
+    $msiNameInRg = $msiInResourceGroup.name
+    $result | Add-Member -NotePropertyName "MsiName" -NotePropertyValue $msiNameInRg
   
     if ($msiNameInRg -contains $MsiName) {      
       $result | Add-Member -NotePropertyName "Result" -NotePropertyValue $true
       return $result
     }
     else {    
-      $result | Add-Member -NotePropertyName "Log" -NotePropertyValue "Failed: Msi $($MsiName) not exist"
+      $result | Add-Member -NotePropertyName "Log" -NotePropertyValue "Failed: Msi $($msiNameInRg) not exist"
       $result | Add-Member -NotePropertyName "Result" -NotePropertyValue $false
       return $result
     }
