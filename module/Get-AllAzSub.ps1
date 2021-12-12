@@ -1,19 +1,16 @@
 function Get-AllAzSub {
 
   # get all the subscription the current account has access to
-
-  try {
-    
-    New-Log -Level "INFO" -Message "get all subscription name"
+  try {  
+    $result = [PSCustomObject]@{}
     $getAllSub = (Get-AzSubscription -ErrorAction Stop).Name
-    return $getAllSub
-  
+    $result | Add-Member -NotePropertyName "SubscriptionList" -NotePropertyValue $getAllSub
+    $result | Add-Member -NotePropertyName "Result" -NotePropertyValue $true
+    return $result
   }
   catch {
-    
-    New-Log -Level "ERROR" -Message "Failed: to get all subscription name"
-    return $false
-
-  } # end try
-  
-} # end function Get-AllAzSub
+    $result | Add-Member -NotePropertyName "Log" -NotePropertyValue "Failed: $($_)"
+    $result | Add-Member -NotePropertyName "Result" -NotePropertyValue $false
+    return $result
+  }
+}
