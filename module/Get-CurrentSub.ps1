@@ -1,20 +1,16 @@
 function Get-CurrentSub {
   
   # get current subsciption that the CLI is set to
-
   try {
-    
-    New-Log -Level "INFO" -Message "Get current subscription name"
+    $result = [PSCustomObject]@{}
     $subName = (Get-AzContext -ErrorAction Stop).Subscription.Name
-    New-Log -Level "INFO" -Message "Current subscription is: $($subName)"
-    return $subName
-
+    $result | Add-Member -NotePropertyName "CurrentSubscriptionName" -NotePropertyValue $subName
+    $result | Add-Member -NotePropertyName "Result" -NotePropertyValue $true
+    return $result
   }
   catch {
-    
-    New-Log "ERROR" -Message "Failed: to get current subscription name"
-    return $false
-
-  } # end try
-  
-} # end function Get-CurrentSub
+    $result | Add-Member -NotePropertyName "Log" -NotePropertyValue "Failed: $($_)"
+    $result | Add-Member -NotePropertyName "Result" -NotePropertyValue $false
+    return $result
+  }
+}
