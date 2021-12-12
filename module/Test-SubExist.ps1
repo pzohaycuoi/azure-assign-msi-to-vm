@@ -1,4 +1,4 @@
-function Check-SubExist {
+function Test-SubExist {
   param (
     [Parameter(Mandatory)]
     [string]$SubscriptionName,

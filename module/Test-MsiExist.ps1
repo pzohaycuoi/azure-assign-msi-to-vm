@@ -1,4 +1,4 @@
-function Check-MsiExist {
+function Test-MsiExist {
   param (
     [Parameter(Mandatory)]
     [string]$ResourceGroup,

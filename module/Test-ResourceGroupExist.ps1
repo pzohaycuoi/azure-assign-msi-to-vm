@@ -1,4 +1,4 @@
-function Check-ResourceGroupExit {
+function Test-ResourceGroupExit {
   param (
     [Parameter(Mandatory)]
     [string]$ResourceGroupName
