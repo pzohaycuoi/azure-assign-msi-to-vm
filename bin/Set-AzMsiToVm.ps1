@@ -1,71 +1,38 @@
-param (
-  [Parameter(Mandatory)]
-  [string]$FilePath
-)
+function Set-AzMsiToVm {
+  param (
+    [Parameter(Mandatory)]
+    [string]$FilePath
+  )
 
-# logging and result
-$logPath = "$($scriptDir)\log\"
-$resultPath = "$($scriptDir)\result\"
-$logPath = Check-PathIsLinuxOrWin -FilePath $logPath
-$resultPath = Check-PathIsLinuxOrWin -FilePath $resultPath
-$logFile = New-Item -Path $logPath -Name "log-$(get-date -Format ddMMyyyy-hhmmss).txt" -Force
-$resultFile = New-Item -Path $resultPath -Name "result-$(get-date -Format ddMMyyyy-hhmmss).csv" -Force
+  # logging and result
+  $logPath = "$($scriptDir)\log\"
+  $resultPath = "$($scriptDir)\result\"
+  $logPath = Test-PathIsLinuxOrWin -FilePath $logPath
+  $resultPath = Test-PathIsLinuxOrWin -FilePath $resultPath
+  $logFile = New-Item -Path $logPath.FilePath -Name "log-$(get-date -Format ddMMyyyy-hhmmss).log" -Force
+  $resultFile = New-Item -Path $resultPath.FilePath -Name "result-$(get-date -Format ddMMyyyy-hhmmss).csv" -Force
 
-Start-Transcript -Path $logFile.FullName
-
-# check if path of the FilePath is valid
-$checkFileExist = Check-FileExist -FilePath $FilePath -FileExtension ".csv"
-
-if ($checkFileExist -eq $true) {
-  # check if csv has all the required headers
-  $reqCsvHeaderDataPath = "$($scriptDir)\Data\required-csv-header.txt"
-  $checkCsvReqHeader = Check-CsvRequiredHeader -FilePath $FilePath -RequiredHeaderFile $reqCsvHeaderDataPath
-
-  if ($checkCsvReqHeader -eq $true) {
-    # if csv has the all the required header - get all the avail subscripition for checking
-    $CsvData = Import-Csv -Path $FilePath
-    $allSub = Get-AllAzSub
-
-    # loop through each row in the csv file
-    foreach ($row in $CsvData) {
-      $subscription = $row.Subscription
-      $msiResourceGroup = $row.MsiResourceGroup
-      $region = $row.Region
-      $msiname = $row.MsiName
-      $vmResourceGroup = $row.VmResourceGroup
-      $vmname = $row.VmName 
-      $checkSubExist = Check-SubExist -SubscriptionName $subscription -SubscriptionList $allSub
-
-      # check if the provided sub is valid
-      if ($checkSubExist -contains $true) {
-        $getCurSub = Get-CurrentSub
-        
-        if ($getCurSub -eq $true) {
-          # set the current cli sub to the target subscription
-          if ($getCurSub -eq $subscription) {
-            $setAzSub = Set-AzSub -SubscriptionName $subscription
-
-            if ($setAzSub -eq $true) {                 
-              # check if the resource group exist
-
-            }
-          }
-          else {
-            break
-          }
-        }
-      }
-      else {
-        break  
-      }
+  # check if path of the FilePath is valid
+  New-Log -Level "INFO" -Message "Check if $($FilePath) exist and extension is .csv" -LogFile $logFile
+  $checkInputFileExist = Test-FileExist -FilePath $FilePath -FileExtension ".csv"
+  if ($checkInputFileExist.Result -eq $true) {
+    New-Log -Level "INFO" -Message $checkInputFileExist.Log -LogFile $logFile
+    # check if csv has all the required headers
+    $reqCsvHeaderFilePath = "$($scriptDir)\data\required-csv-header.txt"
+    $reqCsvHeaderFilePath = Test-PathIsLinuxOrWin -FilePath $reqCsvHeaderFilePath
+    New-Log -Level "INFO" -Message "Check if $($reqCsvHeaderFilePath.FilePath) exist and extension is .txt" -LogFile $logFile
+    $checkCsvReqHeaderFileExist = Test-FileExist -FilePath $reqCsvHeaderFilePath.FilePath -FileExtension ".txt"
+    if ($checkCsvReqHeaderFileExist.Result -eq $true) {
+      New-Log -Level "INFO" -Message $checkCsvReqHeaderFileExist.Log -LogFile $logFile
+      $checkCsvReqHeader = Test-CsvRequiredHeader -FilePath $FilePath -RequiredHeaderFile $reqCsvHeaderFilePath.FilePath
     }
+    else {
+      New-Log -Level "ERROR" -Message $checkCsvReqHeaderFileExist.Log -LogFile $logFile
+      break
+    }    
   }
   else {
+    New-Log -Level "ERROR" -Message $checkInputFileExist.Log -LogFile $logFile
     break
   }
 }
-else {
-  break
-}
-
-Stop-Transcript

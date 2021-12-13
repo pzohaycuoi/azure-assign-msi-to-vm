@@ -4,7 +4,8 @@ function Test-ResourceGroupExit {
     [string]$ResourceGroupName
   )
   
-  # check if resource group exist
+  # check if resource group exis
+  
   try {
     $result = [PSCustomObject]@{}
     $result | Add-Member -NotePropertyName "ResourceGroupName" -NotePropertyValue $ResourceGroupName

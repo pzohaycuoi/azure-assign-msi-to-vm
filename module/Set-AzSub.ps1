@@ -4,7 +4,8 @@ function Set-AzSub {
     [string]$SubscriptionName
   )
 
-  # Set cli subscription to the $SubscriptioknName
+  # Set cli subscription to the $SubscriptionName
+
   try {
     $result = [PSCustomObject]@{}
     $result | Add-Member -NotePropertyName "SubscriptionName" -NotePropertyValue $SubscriptionName

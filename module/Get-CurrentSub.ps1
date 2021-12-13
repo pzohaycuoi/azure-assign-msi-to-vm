@@ -1,6 +1,7 @@
 function Get-CurrentSub {
   
   # get current subsciption that the CLI is set to
+  
   try {
     $result = [PSCustomObject]@{}
     $result | Add-Member -NotePropertyName "CurrentSubscriptionName" -NotePropertyValue $subName

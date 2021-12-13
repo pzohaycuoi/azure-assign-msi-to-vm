@@ -8,6 +8,7 @@ function Test-MsiExist {
   )
 
   # check if the provided MSI exist in the resource group
+  
   try {
     $result = [PSCustomObject]@{}
     $result | Add-Member -NotePropertyName "MsiName" -NotePropertyValue $msiName

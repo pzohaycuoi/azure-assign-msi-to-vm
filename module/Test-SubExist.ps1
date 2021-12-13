@@ -8,6 +8,7 @@ function Test-SubExist {
   )
   
   # check if the subscription name exist in the list
+  
   $result = [PSCustomObject]@{}
   $result | Add-Member -NotePropertyName "SubscriptionName" -NotePropertyValue $SubscriptionName
   if ($SubscriptionList -contains $SubscriptionName) {
